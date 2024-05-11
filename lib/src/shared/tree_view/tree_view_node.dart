@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_model.dart';
 
 class TreeNode extends StatefulWidget {
@@ -59,6 +60,7 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
                     onPressed: () => toggleExpansion(),
                   ),
                 ),
+                Image.asset(widget.data.prefix),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6.0),
