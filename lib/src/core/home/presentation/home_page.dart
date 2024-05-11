@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tractian_challenge/src/home/presentation/widgets/home_buttons_widget.dart';
+import 'package:tractian_challenge/src/core/home/presentation/widgets/home_buttons_widget.dart';
+import 'package:tractian_challenge/src/shared/routes/app_routes.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
 import 'package:tractian_challenge/src/shared/utils/utils.dart';
 
@@ -36,21 +37,21 @@ class _HomePageState extends State<HomePage> {
           children: [
             HomeButtonsWidget(
               title: 'Jaguar Unit',
-              callback: () {},
+              callback: () => Navigator.pushNamed(context, AppRoutes.jaguar),
             ),
             const SizedBox(
               height: 25,
             ),
             HomeButtonsWidget(
               title: 'Tobias Unit',
-              callback: () {},
+              callback: () => Navigator.pushNamed(context, AppRoutes.tobias),
             ),
             const SizedBox(
               height: 25,
             ),
             HomeButtonsWidget(
               title: 'Apex Unit',
-              callback: () {},
+              callback: () => Navigator.pushNamed(context, AppRoutes.apex),
             ),
           ],
         ),
