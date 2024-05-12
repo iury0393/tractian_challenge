@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_model.dart';
 
 final serverData = [
@@ -41,11 +42,33 @@ final serverData = [
   },
   {
     "id": "656734821f4664001f296973",
-    "name": "Fan - External",
+    "name": "Fan - External 1",
     "parentId": null,
     "sensorId": "MTC052",
     "sensorType": "energy",
     "status": "operating",
+    "gatewayId": "QHI640",
+    "locationId": null,
+    "children": [],
+  },
+  {
+    "id": "656734821f4664001f296974",
+    "name": "Fan - External 2",
+    "parentId": null,
+    "sensorId": "MTC052",
+    "sensorType": "energy",
+    "status": "critic",
+    "gatewayId": "QHI640",
+    "locationId": null,
+    "children": [],
+  },
+  {
+    "id": "656734821f4664001f296975",
+    "name": "Fan - External 3",
+    "parentId": null,
+    "sensorId": "MTC052",
+    "sensorType": "energy",
+    "status": "critic",
     "gatewayId": "QHI640",
     "locationId": null,
     "children": [],
@@ -58,6 +81,7 @@ TreeViewModel mapServerDataToTreeData(Map data) {
     children: List.from(data['children'].map((x) => mapServerDataToTreeData(x))),
     prefix: 'assets/component.png',
     hasChildren: (data['children'] as List).isNotEmpty ? true : false,
+    suffix: getSuffix(data),
   );
 }
 
@@ -65,3 +89,13 @@ List<TreeViewModel> treeData = List.generate(
   serverData.length,
   (index) => mapServerDataToTreeData(serverData[index]),
 ).toList();
+
+Icon? getSuffix(Map data) {
+  if ((data['status'] as String) == 'critic') {
+    return const Icon(Icons.error, color: Colors.red);
+  } else if ((data['sensorType'] as String) == 'energy') {
+    return const Icon(Icons.bolt, color: Colors.blue);
+  } else {
+    return null;
+  }
+}

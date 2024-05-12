@@ -70,6 +70,11 @@ class _TreeViewState extends State<TreeView> {
             onPressed: (index) {
               setState(() {
                 _selectedFilters[index] = !_selectedFilters[index];
+                if (index == 0) {
+                  _onSelectedEnergy();
+                } else if (index == 1) {
+                  _onSelectedCritic();
+                }
               });
             },
             borderRadius: const BorderRadius.all(Radius.circular(8)),

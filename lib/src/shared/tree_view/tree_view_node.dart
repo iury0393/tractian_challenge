@@ -61,13 +61,15 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
                   ),
                 ),
                 Image.asset(widget.data.prefix),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    child: Text(
+                Row(
+                  children: [
+                    Text(
                       widget.data.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
+                    widget.data.suffix ?? const SizedBox(),
+                  ],
                 ),
               ],
             ),
