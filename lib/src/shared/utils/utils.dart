@@ -27,4 +27,29 @@ class Utils {
       ),
     );
   }
+
+  List<Widget> toggles = <Widget>[
+    Row(
+      children: [
+        const Icon(Icons.bolt),
+        Text(
+          'Sensor de Energia',
+          style: TextStyles().paragraph(
+            TextSize().medium,
+          ),
+        ),
+      ],
+    ),
+    Row(
+      children: [
+        const Icon(Icons.error),
+        Text(
+          'Critico',
+          style: TextStyles().paragraph(
+            TextSize().medium,
+          ),
+        ),
+      ],
+    ),
+  ];
 }

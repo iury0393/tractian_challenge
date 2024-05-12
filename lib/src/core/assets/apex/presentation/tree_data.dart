@@ -58,7 +58,6 @@ TreeViewModel mapServerDataToTreeData(Map data) {
     children: List.from(data['children'].map((x) => mapServerDataToTreeData(x))),
     prefix: 'assets/component.png',
     hasChildren: (data['children'] as List).isNotEmpty ? true : false,
-    suffix: false,
   );
 }
 

@@ -1,15 +1,17 @@
+import 'package:flutter/material.dart';
+
 class TreeViewModel {
   String title;
   List<TreeViewModel> children;
   String prefix;
-  bool suffix;
+  Icon? suffix;
   bool hasChildren;
 
   TreeViewModel({
     required this.title,
     required this.children,
     required this.prefix,
-    this.suffix = false,
+    this.suffix,
     this.hasChildren = true,
   });
 

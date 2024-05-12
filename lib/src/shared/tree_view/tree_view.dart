@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_model.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_node.dart';
+import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
 import 'package:tractian_challenge/src/shared/utils/utils.dart';
 
 class TreeView extends StatefulWidget {
@@ -16,8 +17,11 @@ class TreeView extends StatefulWidget {
 }
 
 class _TreeViewState extends State<TreeView> {
+  final TextStyles textStyles = TextStyles();
+  final TextSize textSize = TextSize();
   final Utils utils = Utils();
   List<TreeViewModel> _renderList = [];
+  final List<bool> _selectedFilters = <bool>[false, false];
 
   List<TreeViewModel> _filter(String val, List<TreeViewModel> list) {
     List<TreeViewModel> tempNodes = [];
@@ -61,6 +65,24 @@ class _TreeViewState extends State<TreeView> {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(labelText: 'Search'),
             ),
+          ),
+          ToggleButtons(
+            onPressed: (index) {
+              setState(() {
+                _selectedFilters[index] = !_selectedFilters[index];
+              });
+            },
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            selectedBorderColor: Colors.blue[700],
+            selectedColor: Colors.white,
+            fillColor: Colors.blue[200],
+            color: Colors.blue[400],
+            constraints: const BoxConstraints(
+              minHeight: 50.0,
+              minWidth: 120.0,
+            ),
+            isSelected: _selectedFilters,
+            children: utils.toggles,
           ),
           ...List.generate(
             _renderList.length,
