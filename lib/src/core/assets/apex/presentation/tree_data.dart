@@ -64,7 +64,7 @@ final serverData = [
     "parentId": null,
     "sensorId": "MTC052",
     "sensorType": "vibration",
-    "status": "critic",
+    "status": "alert",
     "gatewayId": "QHI640",
     "locationId": null,
   },
@@ -74,7 +74,7 @@ final serverData = [
     "parentId": null,
     "sensorId": "MTC052",
     "sensorType": "vibration",
-    "status": "critic",
+    "status": "alert",
     "gatewayId": "QHI640",
     "locationId": null,
   },
@@ -86,9 +86,9 @@ TreeViewModel mapServerDataToTreeData(Map data) {
     children: data['children'] != null
         ? List.from(data['children'].map((x) => mapServerDataToTreeData(x)))
         : [],
-    prefix: 'assets/component.png',
+    prefix: getPrefix(data),
     suffix: getSuffix(data),
-    hasStatus: data['status'] != null && (data['status'] as String) == 'critic' ? true : false,
+    hasStatus: data['status'] != null && (data['status'] as String) == 'alert' ? true : false,
     hasSensorType:
         data['sensorType'] != null && (data['sensorType'] as String) == 'energy' ? true : false,
   );
@@ -100,11 +100,21 @@ List<TreeViewModel> treeData = List.generate(
 ).toList();
 
 Icon? getSuffix(Map data) {
-  if (data['status'] != null && (data['status'] as String) == 'critic') {
+  if (data['status'] != null && (data['status'] as String) == 'alert') {
     return const Icon(Icons.error, color: Colors.red);
   } else if (data['sensorType'] != null && (data['sensorType'] as String) == 'energy') {
     return const Icon(Icons.bolt, color: Colors.blue);
   } else {
     return null;
+  }
+}
+
+String getPrefix(Map data) {
+  if (data['sensorType'] != null) {
+    return 'assets/component.png';
+  } else if (data['locationId'] != null) {
+    return 'assets/asset.png';
+  } else {
+    return 'assets/location.png';
   }
 }
