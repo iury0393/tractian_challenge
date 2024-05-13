@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
+
+const kBaseURL = 'https://fake-api.tractian.com';
+var kLogger = Logger();
 
 class Utils {
   EdgeInsets getPaddingDefault({double? left, double? top, double? right, double? bottom}) {
