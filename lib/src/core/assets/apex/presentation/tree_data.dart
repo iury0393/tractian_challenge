@@ -24,13 +24,21 @@ final serverData = [
                 "children": [
                   {
                     "id": "656a07cdc50ec9001e84167b",
-                    "name": "MOTOR RT COAL AF01",
+                    "name": "MOTOR RT COAL AF01 1",
                     "parentId": "656a07c3f2d4a1001e2144c5",
                     "sensorId": "FIJ309",
                     "sensorType": "vibration",
                     "status": "operating",
                     "gatewayId": "FRH546",
-                    "children": [],
+                  },
+                  {
+                    "id": "656a07cdc50ec9001e84167b",
+                    "name": "MOTOR RT COAL AF01 2",
+                    "parentId": "656a07c3f2d4a1001e2144c5",
+                    "sensorId": "FIJ309",
+                    "sensorType": "energy",
+                    "status": "operating",
+                    "gatewayId": "FRH546",
                   },
                 ],
               },
@@ -49,39 +57,40 @@ final serverData = [
     "status": "operating",
     "gatewayId": "QHI640",
     "locationId": null,
-    "children": [],
   },
   {
     "id": "656734821f4664001f296974",
     "name": "Fan - External 2",
     "parentId": null,
     "sensorId": "MTC052",
-    "sensorType": "energy",
+    "sensorType": "vibration",
     "status": "critic",
     "gatewayId": "QHI640",
     "locationId": null,
-    "children": [],
   },
   {
     "id": "656734821f4664001f296975",
     "name": "Fan - External 3",
     "parentId": null,
     "sensorId": "MTC052",
-    "sensorType": "energy",
+    "sensorType": "vibration",
     "status": "critic",
     "gatewayId": "QHI640",
     "locationId": null,
-    "children": [],
   },
 ];
 
 TreeViewModel mapServerDataToTreeData(Map data) {
   return TreeViewModel(
     title: data['name'],
-    children: List.from(data['children'].map((x) => mapServerDataToTreeData(x))),
+    children: data['children'] != null
+        ? List.from(data['children'].map((x) => mapServerDataToTreeData(x)))
+        : [],
     prefix: 'assets/component.png',
-    hasChildren: (data['children'] as List).isNotEmpty ? true : false,
     suffix: getSuffix(data),
+    hasStatus: data['status'] != null && (data['status'] as String) == 'critic' ? true : false,
+    hasSensorType:
+        data['sensorType'] != null && (data['sensorType'] as String) == 'energy' ? true : false,
   );
 }
 
@@ -91,9 +100,9 @@ List<TreeViewModel> treeData = List.generate(
 ).toList();
 
 Icon? getSuffix(Map data) {
-  if ((data['status'] as String) == 'critic') {
+  if (data['status'] != null && (data['status'] as String) == 'critic') {
     return const Icon(Icons.error, color: Colors.red);
-  } else if ((data['sensorType'] as String) == 'energy') {
+  } else if (data['sensorType'] != null && (data['sensorType'] as String) == 'energy') {
     return const Icon(Icons.bolt, color: Colors.blue);
   } else {
     return null;

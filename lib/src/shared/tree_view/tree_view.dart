@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tractian_challenge/src/shared/tree_view/filter/tree_view_filter.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_model.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_node.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
@@ -20,30 +21,23 @@ class _TreeViewState extends State<TreeView> {
   final TextStyles textStyles = TextStyles();
   final TextSize textSize = TextSize();
   final Utils utils = Utils();
+  final TreeViewFilter treeViewFilter = TreeViewFilter();
   List<TreeViewModel> _renderList = [];
   final List<bool> _selectedFilters = <bool>[false, false];
-
-  List<TreeViewModel> _filter(String val, List<TreeViewModel> list) {
-    List<TreeViewModel> tempNodes = [];
-
-    for (int i = 0; i < list.length; i++) {
-      TreeViewModel tempNode = TreeViewModel.from(list[i]);
-      if (tempNode.children.isNotEmpty) {
-        tempNode.children = _filter(val, tempNode.children);
-      }
-      if (tempNode.title.contains(RegExp(val, caseSensitive: false)) ||
-          tempNode.children.isNotEmpty) {
-        tempNodes.add(tempNode);
-      }
-    }
-    return tempNodes;
-  }
 
   void _onChange(String val) {
     _renderList = widget.data;
     if (val.isNotEmpty) {
-      _renderList = _filter(val, _renderList);
+      _renderList = treeViewFilter.filter(val, _renderList);
     }
+    setState(() {});
+  }
+
+  void _onSelectedBtn(int index) {
+    _renderList = widget.data;
+    _renderList = index == 0
+        ? treeViewFilter.filterSensor(_renderList)
+        : treeViewFilter.filterStatus(_renderList);
     setState(() {});
   }
 
@@ -71,9 +65,11 @@ class _TreeViewState extends State<TreeView> {
               setState(() {
                 _selectedFilters[index] = !_selectedFilters[index];
                 if (index == 0) {
-                  _onSelectedEnergy();
+                  _selectedFilters[1] = false;
+                  _onSelectedBtn(index);
                 } else if (index == 1) {
-                  _onSelectedCritic();
+                  _selectedFilters[0] = false;
+                  _onSelectedBtn(index);
                 }
               });
             },

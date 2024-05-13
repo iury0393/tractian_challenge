@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view_model.dart';
 
 class TreeNode extends StatefulWidget {
