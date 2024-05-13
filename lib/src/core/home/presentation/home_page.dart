@@ -64,21 +64,36 @@ class _HomePageState extends State<HomePage> {
             children: [
               HomeButtonsWidget(
                 title: '${_controller.jaguarData.name} Unit',
-                callback: () => Navigator.pushNamed(context, AppRoutes.jaguar),
+                callback: () => Navigator.of(context).pushNamed(
+                  AppRoutes.jaguar,
+                  arguments: {
+                    'id': _controller.jaguarData.id,
+                  },
+                ),
               ),
               const SizedBox(
                 height: 25,
               ),
               HomeButtonsWidget(
                 title: '${_controller.tobiasData.name} Unit',
-                callback: () => Navigator.pushNamed(context, AppRoutes.tobias),
+                callback: () => Navigator.of(context).pushNamed(
+                  AppRoutes.tobias,
+                  arguments: {
+                    'id': _controller.tobiasData.id,
+                  },
+                ),
               ),
               const SizedBox(
                 height: 25,
               ),
               HomeButtonsWidget(
                 title: '${_controller.apexData.name} Unit',
-                callback: () => Navigator.pushNamed(context, AppRoutes.apex),
+                callback: () => Navigator.of(context).pushNamed(
+                  AppRoutes.apex,
+                  arguments: {
+                    'id': _controller.apexData.id,
+                  },
+                ),
               ),
             ],
           ),
