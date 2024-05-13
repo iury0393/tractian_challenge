@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
+
+const kBaseURL = 'https://fake-api.tractian.com';
+var kLogger = Logger();
 
 class Utils {
   EdgeInsets getPaddingDefault({double? left, double? top, double? right, double? bottom}) {
@@ -27,4 +31,29 @@ class Utils {
       ),
     );
   }
+
+  List<Widget> toggles = <Widget>[
+    Row(
+      children: [
+        const Icon(Icons.bolt),
+        Text(
+          'Sensor de Energia',
+          style: TextStyles().paragraph(
+            TextSize().medium,
+          ),
+        ),
+      ],
+    ),
+    Row(
+      children: [
+        const Icon(Icons.error),
+        Text(
+          'Critico',
+          style: TextStyles().paragraph(
+            TextSize().medium,
+          ),
+        ),
+      ],
+    ),
+  ];
 }
