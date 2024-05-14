@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:tractian_challenge/src/core/assets/presentation/controller/company_info_controller.dart';
 import 'package:tractian_challenge/src/core/assets/presentation/tree_data.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
@@ -16,10 +18,12 @@ class _ApexPageState extends State<ApexPage> {
   final TextStyles textStyles = TextStyles();
   final TextSize textSize = TextSize();
   final Utils utils = Utils();
+  final CompanyInfoController _controller = CompanyInfoController();
+
   @override
   void initState() {
     super.initState();
-    print(widget.args["id"]);
+    _controller.getLocations(widget.args['id']);
   }
 
   @override
@@ -28,9 +32,28 @@ class _ApexPageState extends State<ApexPage> {
       appBar: utils.getAppBar(
         () => Navigator.pop(context),
       ),
-      body: TreeView(
-        data: treeData,
-      ),
+      body: Observer(builder: (_) {
+        if (_controller.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (_controller.error) {
+          return Center(
+            child: Text(
+              'BAD REQUEST',
+              style: textStyles.paragraph(
+                textSize.big,
+                color: Colors.red,
+                weight: FontWeight.bold,
+              ),
+            ),
+          );
+        }
+        return TreeView(
+          data: treeData,
+        );
+      }),
     );
   }
 }
