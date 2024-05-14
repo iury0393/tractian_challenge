@@ -2,7 +2,7 @@ class LocationModel {
   String id;
   String name;
   String? parentId;
-  List<Object>? children;
+  List<LocationModel>? children;
 
   LocationModel({
     this.id = '',

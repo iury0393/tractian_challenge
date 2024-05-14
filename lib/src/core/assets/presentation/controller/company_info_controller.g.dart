@@ -9,6 +9,14 @@ part of 'company_info_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CompanyInfoController on _CompanyInfoControllerBase, Store {
+  Computed<List<TreeViewModel>>? _$treeDataComputed;
+
+  @override
+  List<TreeViewModel> get treeData => (_$treeDataComputed ??=
+          Computed<List<TreeViewModel>>(() => super.treeData,
+              name: '_CompanyInfoControllerBase.treeData'))
+      .value;
+
   late final _$loadingAtom =
       Atom(name: '_CompanyInfoControllerBase.loading', context: context);
 
@@ -73,6 +81,22 @@ mixin _$CompanyInfoController on _CompanyInfoControllerBase, Store {
     });
   }
 
+  late final _$_treeDataAtom =
+      Atom(name: '_CompanyInfoControllerBase._treeData', context: context);
+
+  @override
+  List<TreeViewModel> get _treeData {
+    _$_treeDataAtom.reportRead();
+    return super._treeData;
+  }
+
+  @override
+  set _treeData(List<TreeViewModel> value) {
+    _$_treeDataAtom.reportWrite(value, super._treeData, () {
+      super._treeData = value;
+    });
+  }
+
   late final _$getLocationsAsyncAction =
       AsyncAction('_CompanyInfoControllerBase.getLocations', context: context);
 
@@ -89,11 +113,26 @@ mixin _$CompanyInfoController on _CompanyInfoControllerBase, Store {
     return _$getAssetsAsyncAction.run(() => super.getAssets(companyId));
   }
 
+  late final _$_CompanyInfoControllerBaseActionController =
+      ActionController(name: '_CompanyInfoControllerBase', context: context);
+
+  @override
+  void getLocationTreeData() {
+    final _$actionInfo = _$_CompanyInfoControllerBaseActionController
+        .startAction(name: '_CompanyInfoControllerBase.getLocationTreeData');
+    try {
+      return super.getLocationTreeData();
+    } finally {
+      _$_CompanyInfoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 loading: ${loading},
-error: ${error}
+error: ${error},
+treeData: ${treeData}
     ''';
   }
 }
