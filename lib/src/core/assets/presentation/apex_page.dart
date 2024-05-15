@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:tractian_challenge/src/core/assets/presentation/controller/company_info_controller.dart';
-import 'package:tractian_challenge/src/core/assets/presentation/tree_data.dart';
 import 'package:tractian_challenge/src/shared/tree_view/tree_view.dart';
 import 'package:tractian_challenge/src/shared/utils/text_styles.dart';
 import 'package:tractian_challenge/src/shared/utils/utils.dart';
@@ -51,7 +50,7 @@ class _ApexPageState extends State<ApexPage> {
           );
         }
         return TreeView(
-          data: treeData,
+          data: _controller.treeData,
         );
       }),
     );

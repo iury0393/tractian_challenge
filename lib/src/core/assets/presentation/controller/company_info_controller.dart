@@ -32,8 +32,24 @@ abstract class _CompanyInfoControllerBase with Store {
   @action
   Future<void> getLocations(String companyId) async {
     try {
+      List<LocationModel> toRemove = [];
+      List<LocationModel> subLocations = [];
       loading = true;
       _locations = await _getCompanyInfoUseCase.getLocations(companyId);
+      subLocations = _locations;
+      for (var location in _locations) {
+        for (var subLocation in subLocations) {
+          if (location.id == subLocation.parentId) {
+            location.children!.add(subLocation);
+          }
+        }
+      }
+      for (var location in _locations) {
+        if (location.parentId != null) {
+          toRemove.add(location);
+        }
+      }
+      _locations.removeWhere((e) => toRemove.contains(e));
       getLocationTreeData();
       loading = false;
     } catch (e) {
