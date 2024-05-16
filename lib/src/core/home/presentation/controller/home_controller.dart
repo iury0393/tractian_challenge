@@ -30,8 +30,7 @@ abstract class _HomeControllerBase with Store {
   Future<void> getCompanies() async {
     try {
       loading = true;
-      final List<HomeModel> data = await _homeUseCase.getCompanies();
-      _list = data;
+      _list = await _homeUseCase.getCompanies();
       loading = false;
     } catch (e) {
       kLogger.e(e);
